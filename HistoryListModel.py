@@ -1,3 +1,5 @@
+from sys import platform
+
 from PySide2 import QtCore
 
 from HistoryViewModel import HistoryViewModel
@@ -106,7 +108,10 @@ class HistoryListModel(QtCore.QAbstractListModel):
     elif role == self.__LASTFM_IS_LOVED_ROLE:
       return scrobble.lastfm_track.is_loved if scrobble.lastfm_track else False
     elif role == self.__TIMESTAMP_ROLE:
-      return scrobble.timestamp.strftime('%-m/%-d/%y %-I:%M:%S %p')
+      if platform == 'win32':
+        return scrobble.timestamp.strftime('%#m/%#d/%y %#I:%M:%S %p')
+      else:
+        return scrobble.timestamp.strftime('%-m/%-d/%y %-I:%M:%S %p')
     elif role == self.__HAS_LASTFM_DATA:
       return scrobble.lastfm_track is not None
 
