@@ -7,13 +7,14 @@ TextEdit {
 
   color: '#FFF'
   readOnly: true
-  renderType: Text.NativeRendering
+  renderType: Text.QtRendering
   selectByMouse: true
   selectionColor: Qt.rgba(1, 1, 1, 0.15)
   wrapMode: Text.Wrap
 
   // Match style of standard label
   font {
+    family: fontLoaders.name
     letterSpacing: 0.25
     weight: Font.Normal
   }

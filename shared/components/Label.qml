@@ -18,7 +18,7 @@ Text {
   color: '#FFF'
   linkColor: color
   opacity: style === kTitleTertiary ? 0.81 : 1
-  renderType: Text.NativeRendering
+  renderType: Text.QtRendering
 
   font {
     capitalization: style === kTitleTertiary ? Font.AllUppercase : Font.MixedCase
