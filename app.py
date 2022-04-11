@@ -3,6 +3,7 @@ import signal
 import sys
 import logging
 
+from PySide2.QtGui import QIcon
 from rich.traceback import install
 from rich.logging import RichHandler
 from PySide2 import QtCore, QtGui, QtQml
@@ -84,6 +85,9 @@ if __name__ == '__main__':
 
   # Apply macOS-specific code which changes the main window to a seamless appearance
   from platform_integrations.WindowStyle import WindowStyle
+
+  # Set app icon on Windows
+  app.setWindowIcon(QIcon("shared/resources/icons/large/lastredux-win.png"))
 
   WindowStyle.applyMacOsWindowTreatment()
 
