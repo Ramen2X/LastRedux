@@ -2,11 +2,13 @@ import os
 import signal
 import sys
 import logging
+import ctypes
 
 from PySide2.QtGui import QIcon
 from rich.traceback import install
 from rich.logging import RichHandler
 from PySide2 import QtCore, QtGui, QtQml
+from sys import platform
 import sentry_sdk
 
 # Constants
@@ -72,6 +74,11 @@ if __name__ == '__main__':
   QtQml.qmlRegisterType(FriendsListModel, MODULE_NAME, MAJOR_VERSION, MINOR_VERSION, 'FriendsListModel')
   QtQml.qmlRegisterType(DetailsViewModel, MODULE_NAME, MAJOR_VERSION, MINOR_VERSION, 'DetailsViewModel')
   QtQml.qmlRegisterType(NetworkImage, MODULE_NAME, MAJOR_VERSION, MINOR_VERSION, 'NetworkImage')
+
+  # Declare app as explicit process to override default Python taskbar icon
+  if platform == 'win32':
+    appid = u'LastRedux' # Consistent with macOS bundle id
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appid)
 
   # Create system app
   app = QtGui.QGuiApplication(sys.argv)
