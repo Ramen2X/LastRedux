@@ -3,6 +3,7 @@ import json
 import time
 import logging
 from datetime import datetime, time, timedelta
+from sys import platform
 from typing import Dict, List
 
 import requests
@@ -302,12 +303,13 @@ class LastfmApiWrapper:
     })
 
     # TODO: Follow guidelines for OS context
-    set_context('system_profile', {
-      **helpers.generate_system_profile()
-    })
-    set_context('app', {
-      'app_version': 'Private Beta 2'
-    })
+    if platform == 'darwin':
+      set_context('system_profile', {
+        **helpers.generate_system_profile()
+      })
+      set_context('app', {
+        'app_version': 'Private Beta 2'
+      })
 
     self.username = session.username
     self.__session_key = session.session_key
