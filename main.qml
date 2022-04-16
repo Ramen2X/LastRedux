@@ -14,6 +14,7 @@ Window {
   property int currentTabIndex: 0
   property bool hasAttemptedLogin: false
   property bool isInMiniMode: (applicationViewModel && applicationViewModel.isInMiniMode) || false
+  property bool isWindows: (applicationViewModel && applicationViewModel.isWindows) || false
   property int cachedWindowWidth: 957
   property int cachedWindowHeight: 600
 
@@ -93,7 +94,7 @@ Window {
     id: trayIcon
 
     visible: true
-    icon.source: 'shared/resources/trayIcon.png'
+    icon.source: isWindows ? 'shared/resources/trayIcon-win.png' : 'shared/resources/trayIcon.png'
     icon.mask: true
 
     menu: Menu {

@@ -2,6 +2,7 @@ import logging
 
 import requests
 from PySide2 import QtCore, QtNetwork
+from sys import platform
 
 from shared.components.NetworkImage import NetworkImage
 from util.lastfm import LastfmApiWrapper, LastfmSession
@@ -13,6 +14,7 @@ class ApplicationViewModel(QtCore.QObject):
   # Qt Property changed signals
   is_logged_in_changed = QtCore.Signal()
   is_offline_changed = QtCore.Signal()
+  is_os_changed = QtCore.Signal() # OS should never change, but QML needs this even to read static properties
 
   # JS event signals
   openOnboarding = QtCore.Signal()
@@ -34,6 +36,13 @@ class ApplicationViewModel(QtCore.QObject):
 
     # Store whether the app is in mini mode
     self.__is_in_mini_mode: bool = None
+
+    # Check operating system to dynamically adjust tray icon
+    if platform == 'win32':
+        self.__is_windows: bool = True
+    else:
+        self.__is_windows: bool = False
+    self.is_os_changed.emit()
     
     # Create network request manager and expose it to all NetworkImage instances
     self.network_manager = QtNetwork.QNetworkAccessManager()
@@ -106,6 +115,12 @@ class ApplicationViewModel(QtCore.QObject):
     type=bool,
     fget=lambda self: self.__is_in_mini_mode,
     notify=isInMiniModeChanged
+  )
+
+  isWindows = QtCore.Property(
+    type=bool,
+    fget=lambda self: self.__is_windows,
+    notify=is_os_changed
   )
 
   isLoggedIn = QtCore.Property(
